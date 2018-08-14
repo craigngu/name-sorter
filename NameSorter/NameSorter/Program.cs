@@ -21,26 +21,13 @@ namespace NameSorter.App
                 return;
             }
 
-            var fileReader = serviceProvider.GetService<IReader>();
-            var sorter = serviceProvider.GetService<INameSorter>();
-            var fileWriter = serviceProvider.GetService<IWriter>();
-
-            var inputPath = args[0];
-            var outputPath = "sorted-names-list.txt";
-
-            var names = fileReader.ReadNames(inputPath);
-
-            var sortedNames = sorter.Sort(names);
-
-            var consoleWriter = new ConsoleWriter();
-            consoleWriter.WriteNames(names);
-
-            fileWriter.WriteNames(outputPath, sortedNames);
+            var service = serviceProvider.GetService<INameSorterService>();
+            service.Run(args[0], "sorted-names-list.txt");            
 
             logger.LogInformation("Application Ended");
 
             Console.ReadKey();
-        }
+        }        
 
         private static ServiceProvider SetupServiceProvider()
         {
@@ -55,7 +42,8 @@ namespace NameSorter.App
             services.AddLogging(configure => configure.AddConsole())
                 .AddSingleton<INameSorter, LinqSorter>()
                 .AddSingleton<IReader, FileReader>()
-                .AddSingleton<IWriter, FileWriter>();
+                .AddSingleton<IWriter, FileWriter>()
+                .AddSingleton<INameSorterService, NameSorterService>();
         }
     }
 }
