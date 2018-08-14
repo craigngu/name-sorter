@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NameSorter
+namespace NameSorter.App
 {
     public interface INameSorter
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NameSorter
+namespace NameSorter.App
 {
     public class LinqSorter : INameSorter
     {

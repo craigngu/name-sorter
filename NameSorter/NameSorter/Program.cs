@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace NameSorter
+namespace NameSorter.App
 {
     public class Program
     {
@@ -23,19 +21,21 @@ namespace NameSorter
                 return;
             }
 
-            var fileName = args[0];
-            var inputLines = System.IO.File.ReadAllLines(fileName);
-
+            var fileReader = serviceProvider.GetService<IReader>();
             var sorter = serviceProvider.GetService<INameSorter>();
+            var fileWriter = serviceProvider.GetService<IWriter>();
 
-            var outputLines = sorter.Sort(inputLines);
+            var inputPath = args[0];
+            var outputPath = "sorted-names-list.txt";
 
-            foreach (var line in outputLines)
-            {
-                Console.WriteLine(line);
-            }
+            var names = fileReader.ReadNames(inputPath);
 
-            System.IO.File.WriteAllLines("sorted-names-list.txt", outputLines);
+            var sortedNames = sorter.Sort(names);
+
+            var consoleWriter = new ConsoleWriter();
+            consoleWriter.WriteNames(names);
+
+            fileWriter.WriteNames(outputPath, sortedNames);
 
             logger.LogInformation("Application Ended");
 
@@ -53,7 +53,9 @@ namespace NameSorter
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging(configure => configure.AddConsole())
-                .AddSingleton<INameSorter, LinqSorter>();
+                .AddSingleton<INameSorter, LinqSorter>()
+                .AddSingleton<IReader, FileReader>()
+                .AddSingleton<IWriter, FileWriter>();
         }
     }
 }
