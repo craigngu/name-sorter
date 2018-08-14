@@ -14,6 +14,26 @@ namespace NameSorter
 
             logger.LogInformation("Application Started");
 
+            if(args.Length != 1)
+            {
+                logger.LogError("Argument number does not match, please specify input file path");
+                Console.ReadKey();
+                return;
+            }
+
+            var fileName = args[0];
+            var inputLines = System.IO.File.ReadAllLines(fileName);
+
+            var outputLines = inputLines;
+
+            foreach(var line in outputLines)
+            {
+                Console.WriteLine(line);
+            }
+            
+            System.IO.File.WriteAllLines("sorted-names-list.txt", outputLines);
+
+
             logger.LogInformation("Application Ended");
 
             Console.ReadKey();
