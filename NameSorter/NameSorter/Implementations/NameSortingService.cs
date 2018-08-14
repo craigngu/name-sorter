@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NameSorter.App
+﻿namespace NameSorter.App
 {
     public class NameSorterService : INameSorterService
     {
@@ -15,16 +13,13 @@ namespace NameSorter.App
             _writer = writer;
         }
 
-        public void Run(string inputPath, string outputPath)
+        public void Run()
         {                       
-            var names = _reader.ReadNames(inputPath);
+            var names = _reader.Read();
 
             var sortedNames = _sorter.Sort(names);
 
-            var consoleWriter = new ConsoleWriter();
-            consoleWriter.WriteNames(names);
-
-            _writer.WriteNames(outputPath, sortedNames);
+            _writer.Write(sortedNames);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace NameSorter.App
 {
     public class ConsoleWriter
     {
-        public void WriteNames(List<string> names)
+        public void Write(List<string> names)
         {
             foreach (var line in names)
             {
