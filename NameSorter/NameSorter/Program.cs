@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 
 namespace NameSorter
 {
@@ -24,7 +25,9 @@ namespace NameSorter
             var fileName = args[0];
             var inputLines = System.IO.File.ReadAllLines(fileName);
 
-            var outputLines = inputLines;
+            var outputLines = inputLines.OrderBy(l => l.Split(" ", StringSplitOptions.RemoveEmptyEntries).Last())
+                .ThenBy(l => l)
+                .ToList();
 
             foreach(var line in outputLines)
             {
@@ -32,8 +35,7 @@ namespace NameSorter
             }
             
             System.IO.File.WriteAllLines("sorted-names-list.txt", outputLines);
-
-
+            
             logger.LogInformation("Application Ended");
 
             Console.ReadKey();
