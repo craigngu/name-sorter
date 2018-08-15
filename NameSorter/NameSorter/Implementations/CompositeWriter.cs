@@ -10,7 +10,7 @@ namespace NameSorter.App.Implementations
 
         public CompositeWriter(IEnumerable<IWriter> writers)
         {
-            _writers = writers;            
+            _writers = writers;
         }
 
         public void Write(IEnumerable<string> names)

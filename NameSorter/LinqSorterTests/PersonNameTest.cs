@@ -23,6 +23,6 @@ namespace NameSorter.UnitTest
             var person = new Person(name);
             person.FirstName.ShouldBe(firstName);
             person.LastName.ShouldBe(lastName);
-        }        
+        }
     }
 }

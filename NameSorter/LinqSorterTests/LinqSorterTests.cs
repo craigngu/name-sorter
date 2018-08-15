@@ -1,3 +1,4 @@
+using NameSorter.App.Helpers;
 using NameSorter.App.Implementations;
 using Shouldly;
 using System.Collections.Generic;
@@ -10,7 +11,8 @@ namespace NameSorter.UnitTest
         [Fact]
         public void ShouldSortTheExampleCorrectly()
         {
-            new LinqSorter().Sort(exampleInput)
+            new LinqSorter(new PersonNameComparer())
+                .Sort(exampleInput)
                 .ShouldBe(exampleOutput);
         }
 

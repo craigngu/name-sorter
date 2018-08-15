@@ -19,7 +19,7 @@ namespace NameSorter.App.Models
 
         public string FirstName => string.Join(" ", GetFirstNames());
 
-        public string LastName => _nameParts.Last();
+        public string LastName => _nameParts.Last();       
 
         private IEnumerable<string> GetFirstNames()
         {

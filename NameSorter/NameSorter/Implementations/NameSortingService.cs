@@ -26,11 +26,11 @@ namespace NameSorter.App.Implementations
                 var sortedNames = _sorter.Sort(names);
                 _writer.Write(sortedNames);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e.Message);
             }
-            
+
         }
     }
 }
