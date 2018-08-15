@@ -1,26 +1,22 @@
-﻿using NameSorter.App.Helpers;
-using NameSorter.App.Models;
-using System;
+﻿using NameSorter.App.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NameSorter.App.Implementations
 {
-    public class LinqSorter : INameSorter
+    public class LinqSorter<T> : ISorter<T>
     {
-        private readonly IComparer<Person> _comparer;
+        private readonly IComparer<T> _comparer;
 
-        public LinqSorter(IComparer<Person> comparer)
+        public LinqSorter(IComparer<T> comparer)
         {
             _comparer = comparer;
         }
 
-        public List<string> Sort(IEnumerable<string> names)
+        public List<T> Sort(IEnumerable<T> input)
         {
-            return names.Select(n => new Person(n))
-                .OrderBy(p => p, _comparer)
-                .Select(p => p.Name)
-                .ToList();
+            return input.OrderBy(i => i, _comparer)
+                .ToList();            
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using NameSorter.App.Config;
 using NameSorter.App.Helpers;
 using NameSorter.App.Implementations;
+using NameSorter.App.Interfaces;
 using NameSorter.App.Models;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,8 @@ namespace NameSorter.App
                 .AddSingleton(GetOutputPath(config))
                 .AddSingleton(new InputPath { Value = inputPath })
                 .AddSingleton<IComparer<Person>, PersonNameComparer>()
-                .AddSingleton<INameSorter, LinqSorter>()
+                .AddSingleton<ISorter<Person>, BubbleSorter<Person>>()
+                .AddSingleton<INameSorter, PersonNameSorter>()
                 .AddSingleton<IReader, FileReader>()
                 .AddSingleton<FileWriter>()
                 .AddSingleton<ConsoleWriter>()

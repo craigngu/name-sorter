@@ -8,14 +8,14 @@ using Xunit;
 
 namespace NameSorter.UnitTest
 {
-    public class LinqSorterTests
+    public class BubbleSorterTest
     {
         [Fact]
         public void ShouldSortNumbersCorrectly()
         {
             var input = new List<int> { 1, 3, 2, 1, 1, 3, 2, 5, 6, 7 };
             var output = new List<int> { 1, 1, 1, 2, 2, 3, 3, 5, 6, 7 };
-            new LinqSorter<int>(Comparer<int>.Default)
+            new BubbleSorter<int>(Comparer<int>.Default)
                 .Sort(input)
                 .ShouldBe(output);
         }
@@ -23,7 +23,7 @@ namespace NameSorter.UnitTest
         [Fact]
         public void ShouldSortTheExampleCorrectly()
         {
-            new LinqSorter<Person>(new PersonNameComparer())
+            new BubbleSorter<Person>(new PersonNameComparer())
                 .Sort(exampleInput.Select(i => new Person(i)))
                 .Select(p => p.Name)
                 .ShouldBe(exampleOutput);
