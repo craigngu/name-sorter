@@ -11,11 +11,20 @@ namespace NameSorter.App.Models
         public Person(string name)
         {
             Name = name;
-            _nameParts = name.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+            _nameParts = SplitNameIntoParts(name);
+            ValidateNamePartCount();
+        }
 
-            if(_nameParts.Count < 2 || _nameParts.Count > 4)
+        private static List<string> SplitNameIntoParts(string name)
+        {
+            return name.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+        }
+
+        private void ValidateNamePartCount()
+        {
+            if (_nameParts.Count < 2 || _nameParts.Count > 4)
             {
-                throw new Exception($"{name} is not a valid name");
+                throw new Exception($"{Name} is not a valid name");
             }
         }
 

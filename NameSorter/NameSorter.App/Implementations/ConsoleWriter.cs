@@ -7,9 +7,9 @@ namespace NameSorter.App.Implementations
     {
         public void Write(IEnumerable<string> names)
         {
-            foreach (var line in names)
+            foreach (var name in names)
             {
-                Console.WriteLine(line);
+                Console.WriteLine(name);
             }
         }
     }
