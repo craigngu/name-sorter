@@ -1,17 +1,26 @@
+using NameSorter.App;
 using NameSorter.App.Implementations;
-using Shouldly;
+using NSubstitute;
 using System.Collections.Generic;
 using Xunit;
 
 namespace NameSorter.UnitTest
 {
-    public class LinqSorterTests
+    public class CompositeWriterTest
     {
         [Fact]
-        public void ShouldSortTheExampleCorrectly()
+        public void ShouldCallAllWritersOnceEach()
         {
-            new LinqSorter().Sort(exampleInput)
-                .ShouldBe(exampleOutput);
+            var writer1 = Substitute.For<IWriter>();
+            var writer2 = Substitute.For<IWriter>();
+            var writer3 = Substitute.For<IWriter>();
+            var writer = new CompositeWriter(new List<IWriter> { writer1, writer2, writer3 });
+
+            writer.Write(exampleOutput);
+
+            writer1.Received(1).Write(exampleOutput);
+            writer2.Received(1).Write(exampleOutput);
+            writer3.Received(1).Write(exampleOutput);
         }
 
         private static readonly List<string> exampleInput = new List<string>

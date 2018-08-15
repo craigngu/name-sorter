@@ -2,7 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NameSorter.App.Config;
+using NameSorter.App.Implementations;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -51,8 +53,13 @@ namespace NameSorter.App
                 .AddSingleton(new InputPath { Value = inputPath })
                 .AddSingleton<INameSorter, LinqSorter>()
                 .AddSingleton<IReader, FileReader>()
-                .AddSingleton<IWriter, FileWriter>()
-                .AddSingleton<INameSorterService, NameSorterService>();
+                .AddSingleton<FileWriter>()
+                .AddSingleton<ConsoleWriter>()
+                .AddSingleton<IWriter>(sp => new CompositeWriter(new List<IWriter> {
+                    sp.GetService<FileWriter>(),
+                    sp.GetService<ConsoleWriter>()
+                }))
+                .AddSingleton<INameSorterService, NameSorterService>();            
         }
 
         private static OutputPath GetOutputPath(IConfigurationRoot config)

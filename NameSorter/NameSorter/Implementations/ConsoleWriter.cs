@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NameSorter.App
+namespace NameSorter.App.Implementations
 {
-    public class ConsoleWriter
+    public class ConsoleWriter : IWriter
     {
-        public void Write(List<string> names)
+        public void Write(IEnumerable<string> names)
         {
             foreach (var line in names)
             {

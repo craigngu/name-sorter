@@ -1,17 +1,32 @@
+using Microsoft.Extensions.Logging;
+using NameSorter.App;
 using NameSorter.App.Implementations;
-using Shouldly;
+using NSubstitute;
 using System.Collections.Generic;
 using Xunit;
 
 namespace NameSorter.UnitTest
 {
-    public class LinqSorterTests
+    public class NameSorterServiceTest
     {
         [Fact]
-        public void ShouldSortTheExampleCorrectly()
+        public void ShouldCallReadSortAndWriteOnce()
         {
-            new LinqSorter().Sort(exampleInput)
-                .ShouldBe(exampleOutput);
+            var reader = Substitute.For<IReader>();
+            var sorter = Substitute.For<INameSorter>();
+            var writer = Substitute.For<IWriter>();
+            var logger = Substitute.For<ILogger<NameSorterService>>();
+
+            reader.Read().ReturnsForAnyArgs(exampleInput);
+            sorter.Sort(Arg.Any<IEnumerable<string>>()).ReturnsForAnyArgs(exampleOutput);
+
+            var service = new NameSorterService(reader, sorter, writer, logger);
+            service.Run();
+
+            reader.Received(1).Read();
+            sorter.Received(1).Sort(exampleInput);
+            writer.Received(1).Write(exampleOutput);
+            logger.DidNotReceive().LogError(Arg.Any<string>());
         }
 
         private static readonly List<string> exampleInput = new List<string>

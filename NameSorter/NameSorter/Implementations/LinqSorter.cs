@@ -1,30 +1,19 @@
-﻿using System;
+﻿using NameSorter.App.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NameSorter.App
+namespace NameSorter.App.Implementations
 {
     public class LinqSorter : INameSorter
     {
         public List<string> Sort(IEnumerable<string> names)
         {
-            return names.OrderBy(l => GetLastName(l))
-                        .ThenBy(l => GetFirstNames(l))
-                        .ToList();
-        }
-
-        private static string GetFirstNames(string name)
-        {
-            var names = name.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-
-            var firstNames = names.Take(names.Count() - 1);
-
-            return string.Join(" ", firstNames);
-        }
-
-        private static string GetLastName(string name)
-        {
-            return name.Split(" ", StringSplitOptions.RemoveEmptyEntries).Last();
-        }
+            return names.Select(n => new Person(n))
+                .OrderBy(p => p.LastName)
+                .ThenBy(p => p.FirstName)
+                .Select(p => p.Name)
+                .ToList();            
+        }        
     }
 }

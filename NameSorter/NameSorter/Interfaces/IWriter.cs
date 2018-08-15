@@ -4,6 +4,6 @@ namespace NameSorter.App
 {
     public interface IWriter
     {
-        void Write(List<string> names);
+        void Write(IEnumerable<string> names);
     }
 }
