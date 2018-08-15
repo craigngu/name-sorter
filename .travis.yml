@@ -1,8 +1,8 @@
 language: csharp
-solution: NameSorter.sln
+solution: NameSorter/NameSorter.sln
 install:
-  - nuget restore NameSorter.sln
+  - nuget restore NameSorter/NameSorter.sln
   - nuget install xunit.runners -Version 2.4.0 -OutputDirectory testrunner
 script:
-  - xbuild /p:Configuration=Release NameSorter.sln
+  - xbuild /p:Configuration=Release NameSorter/NameSorter.sln
   - mono ./testrunner/xunit.runners.2.4.0/tools/xunit.console.clr4.exe ./NameSorter.UnitTest/bin/Release/netcoreapp2.0/NameSorter.UnitTest.dll 
