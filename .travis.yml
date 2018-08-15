@@ -3,6 +3,7 @@ dist: trusty
 mono: none
 dotnet: 2.0.0
 script:
+- cd NameSorter
 - dotnet restore
-- dotnet build
-- dotnet test NameSorter/NameSorter.UnitTest/NameSorter.UnitTest.csproj
+- dotnet build NameSorter.UnitTest/NameSorter.UnitTest.csproj
+- dotnet test NameSorter.UnitTest/NameSorter.UnitTest.csproj
