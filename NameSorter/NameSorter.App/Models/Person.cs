@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NameSorter.App.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,14 +12,9 @@ namespace NameSorter.App.Models
         public Person(string name)
         {
             Name = name;
-            _nameParts = SplitNameIntoParts(name);
+            _nameParts = name.ToNameParts();
             ValidateNamePartCount();
-        }
-
-        private static List<string> SplitNameIntoParts(string name)
-        {
-            return name.Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
-        }
+        }        
 
         private void ValidateNamePartCount()
         {

@@ -1,7 +1,7 @@
 ﻿using NameSorter.App.Interfaces;
 using NameSorter.App.Models;
+using NameSorter.App.Helpers;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NameSorter.App.Implementations
 {
@@ -16,9 +16,8 @@ namespace NameSorter.App.Implementations
 
         public List<string> Sort(IEnumerable<string> names)
         {
-            return _sorter.Sort(names.Select(n => new Person(n)))
-                .Select(p => p.Name)
-                .ToList();
-        }
+            return _sorter.Sort(names.ToPersonList())
+                .ToNameList();            
+        }        
     }
 }
