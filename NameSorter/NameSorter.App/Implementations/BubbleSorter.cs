@@ -1,4 +1,5 @@
-﻿using NameSorter.App.Interfaces;
+﻿using NameSorter.App.Helpers;
+using NameSorter.App.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,22 +24,16 @@ namespace NameSorter.App.Implementations
                 changed = false;
                 for (int i = 0; i < list.Count() - 1; i++)
                 {
-                    if(_comparer.Compare(list[i], list[i+1]) > 0)
+                    bool isOutOfOrder = _comparer.Compare(list[i], list[i + 1]) > 0;
+                    if (isOutOfOrder)
                     {
-                        Swap(list, i, i + 1);
+                        list.Swap(i, i + 1);
                         changed = true;
                     }
                 }
             }
 
             return list;
-        }
-
-        private void Swap(List<T> list, int index1, int index2)
-        {
-            var temp = list[index1];
-            list[index1] = list[index2];
-            list[index2] = temp;
-        }
+        }        
     }
 }

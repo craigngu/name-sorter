@@ -19,6 +19,7 @@ namespace NameSorter.App
         {
             if (args.Length != 1)
             {
+                // End application when input file is not provided
                 Console.WriteLine("Argument number does not match, please specify input file path");
                 Console.ReadKey();
                 return;
@@ -77,6 +78,7 @@ namespace NameSorter.App
 
         private static IConfigurationRoot GetConfig()
         {
+            // output path is stored in config for now
             return new ConfigurationBuilder()
                           .SetBasePath(Directory.GetCurrentDirectory())
                           .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
