@@ -1,5 +1,6 @@
 using NameSorter.App.Models;
 using Shouldly;
+using System;
 using Xunit;
 
 namespace NameSorter.UnitTest
@@ -23,6 +24,15 @@ namespace NameSorter.UnitTest
             var person = new Person(name);
             person.FirstName.ShouldBe(firstName);
             person.LastName.ShouldBe(lastName);
+        }
+
+        [Theory]
+        [InlineData("Janet")]
+        [InlineData("")]
+        [InlineData("Frankie Conner Ritter Lopez Clarke")]
+        public void InvalidNameShouldThrowError(string name)
+        {
+            Should.Throw(() => new Person(name), typeof(Exception));
         }
     }
 }
